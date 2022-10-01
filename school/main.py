@@ -1,2 +1,5 @@
+import user
+
 if __name__ == '__main__':
-    pass
+    _user = user.User('Oleg')
+    print(_user.name)
