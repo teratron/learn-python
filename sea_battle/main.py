@@ -1,4 +1,4 @@
-# https://www.youtube.com/watch?v=TYkMfZj_Xes&list=PLxiU3nwEQ4PGrVqfHb4DhElHrIeJsFHah&index=2
+# https://www.youtube.com/watch?v=TYkMfZj_Xes&list=PLxiU3nwEQ4PGrVqfHb4DhElHrIeJsFHah&index=4
 from tkinter import *
 from tkinter import messagebox
 import time
@@ -31,7 +31,7 @@ tk.title("Sea Battle")
 tk.resizable(False, False)
 tk.wm_attributes("-topmost", 1)
 canvas = Canvas(tk, width=size_canvas_x + menu_x, height=size_canvas_y, bd=0, highlightthickness=0)
-canvas.create_rectangle(0, 0, size_canvas_x, size_canvas_y, fill="yellow")
+canvas.create_rectangle(0, 0, size_canvas_x, size_canvas_y, fill="white")
 canvas.pack()
 tk.update()
 
@@ -41,7 +41,7 @@ def draw_table():
     j: int
     for i in range(0, s_x + 1):
         j = step_x * i
-        canvas.create_line(j, 0, j, size_canvas_y, fill="red")
+        canvas.create_line(j, 0, j, size_canvas_y, fill="blue")
 
     for i in range(0, s_y + 1):
         j = step_y * i
@@ -71,16 +71,20 @@ def add_to_all(event):
     _type = 0  # LMB
     if event.num == 3:
         _type = 1  # RMB
+    # print(_type)
 
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
-    print(_type, mouse_x, mouse_y)
+    # print(mouse_x, mouse_y)
 
-    ip_x = mouse_x
+    ip_x = mouse_x // step_x
+    ip_y = mouse_y // step_y
+    print(_type, ":", ip_x, ip_y)
 
 
 canvas.bind_all("<Button-1>", add_to_all)  # LMB
 canvas.bind_all("<Button-3>", add_to_all)  # RMB
+
 
 # App process
 while app_running:
