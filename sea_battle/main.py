@@ -53,11 +53,11 @@ draw_table()
 
 # ---
 def button_show_enemy():
-    pass
+    print("button_show_enemy")
 
 
 def button_begin_again():
-    pass
+    print("button_begin_again")
 
 
 b0 = Button(tk, text="Show enemy ships", command=button_show_enemy)
@@ -66,18 +66,21 @@ b0.place(x=size_canvas_x + 20, y=30)
 b1.place(x=size_canvas_x + 20, y=60)
 
 
-# ---
+# Debug info
 def add_to_all(event):
     _type = 0  # LMB
     if event.num == 3:
         _type = 1  # RMB
 
-    print(_type)
+    mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
+    mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
+    print(_type, mouse_x, mouse_y)
+
+    ip_x = mouse_x
 
 
 canvas.bind_all("<Button-1>", add_to_all)  # LMB
 canvas.bind_all("<Button-3>", add_to_all)  # RMB
-
 
 # App process
 while app_running:
