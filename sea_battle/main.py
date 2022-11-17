@@ -19,8 +19,8 @@ ships = s_x // 2  # max number of ships
 ship_len1 = s_x // 5  # length 1st type of ship
 ship_len2 = s_x // 3  # length 2nd type of ship
 ship_len3 = s_x // 2  # length 3rd type of ship
-enemy_ships = []
-list_ids = []  # list of objects canvas
+enemy_ships: list = []
+list_ids: list = []  # list of objects canvas
 
 
 def on_closing():
@@ -43,7 +43,6 @@ tk.update()
 
 # Grid area
 def draw_table():
-    j: int
     for i in range(0, s_x + 1):
         j = step_x * i
         canvas.create_line(j, 0, j, size_canvas_y, fill="blue")
@@ -165,12 +164,12 @@ def generate_enemy_ships():
                     except Exception:
                         return
 
-                        # делаем подсчет 1ц
+        # делаем подсчет 1ц
         sum_1_enemy = 0
         for i in range(s_x):
             for j in range(s_y):
                 if enemy_ships[j][i] > 0:
-                    sum_1_enemy = sum_1_enemy + 1
+                    sum_1_enemy += 1
 
 
 # generate_enemy_ships()
