@@ -1,15 +1,15 @@
 # https://www.youtube.com/watch?v=TYkMfZj_Xes&list=PLxiU3nwEQ4PGrVqfHb4DhElHrIeJsFHah&index=5
-from tkinter import *
-from tkinter import messagebox
-import time
+# from tkinter import *
 import random
+import time
+import tkinter
+from tkinter import messagebox
 
 # print(TkVersion)
 app_running = True
 size_canvas_x = 600
 size_canvas_y = 600
-s_x = s_y = 10  # number of cell of game field
-# s_y = 12
+s_x = s_y = 10  # number of cell of game field s_y = 12
 step_x = size_canvas_x // s_x
 step_y = size_canvas_y // s_y
 size_canvas_x = step_x * s_x  # correction size_canvas_x
@@ -30,12 +30,12 @@ def on_closing():
         tk.destroy()
 
 
-tk = Tk()
+tk = tkinter.Tk()
 tk.protocol("WM_DELETE_WINDOW", on_closing)
 tk.title("Sea Battle")
 tk.resizable(False, False)
 tk.wm_attributes("-topmost", 1)
-canvas = Canvas(tk, width=size_canvas_x + menu_x, height=size_canvas_y, bd=0, highlightthickness=0)
+canvas = tkinter.Canvas(tk, width=size_canvas_x + menu_x, height=size_canvas_y, bd=0, highlightthickness=0)
 canvas.create_rectangle(0, 0, size_canvas_x, size_canvas_y, fill="white")
 canvas.pack()
 tk.update()
@@ -78,8 +78,8 @@ def button_begin_again():
     list_ids = []
 
 
-b0 = Button(tk, text="Show enemy ships", command=button_show_enemy)
-b1 = Button(tk, text="Begin again", command=button_begin_again)
+b0 = tkinter.Button(tk, text="Show enemy ships", command=button_show_enemy)
+b1 = tkinter.Button(tk, text="Begin again", command=button_begin_again)
 b0.place(x=size_canvas_x + 20, y=30)
 b1.place(x=size_canvas_x + 20, y=70)
 
@@ -109,7 +109,7 @@ def generate_enemy_ships():
     global enemy_ships
     ships_list = []
 
-    for i in range(ships):
+    for _ in range(ships):
         ships_list.append(random.choice([ship_len1, ship_len2, ship_len3]))
 
     sum_1_all_ships = sum(ships_list)
@@ -133,50 +133,44 @@ def generate_enemy_ships():
                 about_y = about_y - len_ship
 
             # print(horizont_vertical, about_x,about_y)
-            if horizont_vertical == 1:
-                if about_x + len_ship <= s_x:
-                    for j in range(len_ship):
-                        try:
-                            check_near_ships = enemy_ships[about_y][about_x - 1] + \
-                                               enemy_ships[about_y][about_x + j] + \
-                                               enemy_ships[about_y][about_x + j + 1] + \
-                                               enemy_ships[about_y + 1][about_x + j + 1] + \
-                                               enemy_ships[about_y - 1][about_x + j + 1] + \
-                                               enemy_ships[about_y + 1][about_x + j] + \
-                                               enemy_ships[about_y - 1][about_x + j]
-                            # print(check_near_ships)
-                            if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
-                                enemy_ships[about_y][about_x + j] = i + 1  # записываем номер корабля
-                        except Exception:
-                            pass
+            if horizont_vertical == 1 and about_x + len_ship <= s_x:
+                for j in range(len_ship):
+                    try:
+                        check_near_ships = enemy_ships[about_y][about_x - 1] + \
+                                           enemy_ships[about_y][about_x + j] + \
+                                           enemy_ships[about_y][about_x + j + 1] + \
+                                           enemy_ships[about_y + 1][about_x + j + 1] + \
+                                           enemy_ships[about_y - 1][about_x + j + 1] + \
+                                           enemy_ships[about_y + 1][about_x + j] + \
+                                           enemy_ships[about_y - 1][about_x + j]
+                        # print(check_near_ships)
+                        if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
+                            enemy_ships[about_y][about_x + j] = i + 1  # записываем номер корабля
+                    except Exception:
+                        return
 
-            if horizont_vertical == 2:
-                if about_y + len_ship <= s_y:
-                    for j in range(len_ship):
-                        try:
-                            check_near_ships = enemy_ships[about_y - 1][about_x] + \
-                                               enemy_ships[about_y + j][about_x] + \
-                                               enemy_ships[about_y + j + 1][about_x] + \
-                                               enemy_ships[about_y + j + 1][about_x + 1] + \
-                                               enemy_ships[about_y + j + 1][about_x - 1] + \
-                                               enemy_ships[about_y + j][about_x + 1] + \
-                                               enemy_ships[about_y + j][about_x - 1]
-                            # print(check_near_ships)
-                            if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
-                                enemy_ships[about_y + j][about_x] = i + 1  # записываем номер корабля
-                        except Exception:
-                            pass
+            if horizont_vertical == 2 and about_y + len_ship <= s_y:
+                for j in range(len_ship):
+                    try:
+                        check_near_ships = enemy_ships[about_y - 1][about_x] + \
+                                           enemy_ships[about_y + j][about_x] + \
+                                           enemy_ships[about_y + j + 1][about_x] + \
+                                           enemy_ships[about_y + j + 1][about_x + 1] + \
+                                           enemy_ships[about_y + j + 1][about_x - 1] + \
+                                           enemy_ships[about_y + j][about_x + 1] + \
+                                           enemy_ships[about_y + j][about_x - 1]
+                        # print(check_near_ships)
+                        if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
+                            enemy_ships[about_y + j][about_x] = i + 1  # записываем номер корабля
+                    except Exception:
+                        return
 
-        # делаем подсчет 1ц
+                        # делаем подсчет 1ц
         sum_1_enemy = 0
         for i in range(s_x):
             for j in range(s_y):
                 if enemy_ships[j][i] > 0:
                     sum_1_enemy = sum_1_enemy + 1
-
-        # print(sum_1_enemy)
-        # print(ships_list)
-        # print(enemy_ships)
 
 
 # generate_enemy_ships()
