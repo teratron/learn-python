@@ -57,24 +57,25 @@ draw_table()
 
 # ---
 def button_show_enemy():
-    print("button_show_enemy")
-    generate_enemy_ships()
-    global list_ids
+    # print("button_show_enemy")
+    # generate_enemy_ships()
+    #global list_ids
     for i in range(s_x):
         for j in range(s_y):
             if enemy_ships[j][i] > 0:
                 _id = canvas.create_rectangle(i * step_x, j * step_y,
-                                              (i + 1) * step_x, (j + 1) * step_y,
+                                              i * step_x + step_x, j * step_y + step_y,
                                               fill="red")
                 list_ids.append(_id)
 
 
 def button_begin_again():
-    print("button_begin_again")
+    # print("button_begin_again")
     global list_ids
     for i in list_ids:
         canvas.delete(i)
     list_ids = []
+    generate_enemy_ships()
 
 
 b0 = tkinter.Button(tk, text="Show enemy ships", command=button_show_enemy)
@@ -97,6 +98,13 @@ def add_to_all(event):
     ip_x = mouse_x // step_x
     ip_y = mouse_y // step_y
     print(_type, ":", ip_x, ip_y)
+
+    if ip_x < s_x and ip_y < s_y:
+        draw_point(ip_x, ip_y)
+
+
+def draw_point(x, y):
+    print(enemy_ships[x][y])
 
 
 canvas.bind_all("<Button-1>", add_to_all)  # LMB
@@ -146,7 +154,7 @@ def generate_enemy_ships():
                         if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
                             enemy_ships[about_y][about_x + j] = i + 1  # записываем номер корабля
                     except Exception:
-                        return
+                        pass
 
             if horizont_vertical == 2 and about_y + len_ship <= s_y:
                 for j in range(len_ship):
@@ -162,7 +170,7 @@ def generate_enemy_ships():
                         if check_near_ships == 0:  # записываем в том случае, если нет ничего рядом
                             enemy_ships[about_y + j][about_x] = i + 1  # записываем номер корабля
                     except Exception:
-                        return
+                        pass
 
         # делаем подсчет 1ц
         sum_1_enemy = 0
@@ -172,7 +180,7 @@ def generate_enemy_ships():
                     sum_1_enemy += 1
 
 
-# generate_enemy_ships()
+generate_enemy_ships()
 
 # App process
 while app_running:
