@@ -1,20 +1,40 @@
+# Публичный
 class A:
-    def _protected(self):
-        print("Это протектед метод!")
+    text = "публичный"
+
+    def public(self):
+        print(f"Это {self.text} метод!")
 
 
 a = A()
-a._protected()  # Это протектед метод!
+a.public()  # Это публичный метод!
 
 
+# Защищённый
 class B:
-    def __private(self):
-        print("Это приватный метод!")
+    _text = "защищённый"
+
+    def _protected(self):
+        print(f"Это {self._text} метод!")
 
 
 b = B()
-# b.__private()
-# Traceback (most recent call last):
-# AttributeError: 'B' object has no attribute '__private'. Did you mean: '_B__private'?
+b._protected()  # Это защищённый метод!
 
-b._B__private()  # type: ignore # Это приватный метод!
+
+# Приватный
+class C:
+    __text = "приватный"
+
+    def __private(self):
+        print(f"Это {self.__text} метод!")
+
+
+c = C()
+
+# c.__private()
+# Traceback (most recent call last):
+# AttributeError: 'C' object has no attribute '__private'. Did you mean: '_B__private'?
+
+# Нарушение инкапсуляции
+c._C__private()  # type: ignore # Это приватный метод!
